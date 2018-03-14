@@ -12,7 +12,6 @@ class LoginController extends Controller {
   async create() {
     const { ctx, service } = this;
     ctx.body = ctx.request.body;
-    
   }
 }
 
