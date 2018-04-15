@@ -6,12 +6,33 @@ class LoginController extends Controller {
   // get
   async index() {
     const { ctx } = this;
+    console.log('sussess get');
     ctx.body = `body: ${JSON.stringify(ctx.query.id)}`;
   }
-  // login
+  // 登录
   async create() {
-    const { ctx, service } = this;
-    ctx.body = ctx.request.body;
+    const { userName, userPasswd } = this.ctx.request.body;
+    const user = await this.ctx.service.login.fetch(userName, userPasswd);
+    if (user && user.u_passwd === userPasswd) {
+      const deadline = 1000 * 60 * 60 * 24;
+      const token = {
+        id: user.id,
+        nowDate: new Date().getTime(),
+        deadline: deadline
+      };
+      this.ctx.body = {
+        result: true,
+        status: 200
+      };
+      this.ctx.cookies.set('mx_token', JSON.stringify(token), {
+        encrypt: true
+      });
+    } else {
+      this.ctx.body = {
+        result: false,
+        status: 404
+      };
+    }
   }
 }
 
