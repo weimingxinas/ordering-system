@@ -5,31 +5,31 @@ const Controller = require('egg').Controller;
 class FoodController extends Controller {
   // 获取所有菜
   async index() {
-    let food = await this.ctx.service.food.fetchFood();
-    if (food) {
+    let res = await this.ctx.service.food.fetchFood();
+    if (res) {
       this.ctx.body = await {
-        data: food,
+        data: res,
         status: 200
       };
     } else {
       this.ctx.body = await {
-        data: food || [],
-        status: 500
+        data: res.sqlMessage || res,
+        status: 'get food error'
       }
     }
   }
   // 获取菜的分类
   async foodType() {
-    const type = await this.ctx.service.food.fetchFoodType();
-    if (type) {
+    const res = await this.ctx.service.food.fetchFoodType();
+    if (res) {
       this.ctx.body = await {
-        data: type,
+        data: res,
         status: 200
       }
     } else {
       this.ctx.body = await {
-        data: type || [],
-        status: 500
+        data: res.sqlMessage || res,
+        status: 'get foodtype error'
       }
     }
   }
@@ -44,7 +44,7 @@ class FoodController extends Controller {
       }
     } else {
       this.ctx.body = await {
-        data: res.sqlMessage,
+        data: res.sqlMessage || res,
         status: 'params error'
       }
     }
@@ -60,7 +60,7 @@ class FoodController extends Controller {
       }
     } else {
       this.ctx.body = await {
-        data: res.sqlMessage,
+        data: res.sqlMessage || res,
         status: 'delete error'
       }
     }
@@ -69,6 +69,7 @@ class FoodController extends Controller {
   async update() {
     const c_id = this.ctx.params.id;
     const c_body = this.ctx.request.body;
+    console.log(c_id, c_body);
     const res = await this.ctx.service.food.updateFood(c_id, c_body);
     if(res.affectedRows === 1) {
       this.ctx.body = await {
@@ -77,8 +78,8 @@ class FoodController extends Controller {
       }
     } else {
       this.ctx.body = await {
-        data: res.sqlMessage,
-        status: 'delete error'
+        data: res.sqlMessage || res,
+        status: 'update error'
       }
     }
   }

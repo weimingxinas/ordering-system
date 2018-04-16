@@ -1,4 +1,4 @@
-// app/service/user.js
+// app/service/food.js
 const Service = require('egg').Service;
 
 class FoodService extends Service {
@@ -31,6 +31,19 @@ class FoodService extends Service {
     } catch(e) {
       return e;
     }
+  }
+  async updateFood(id, params) {
+    try {
+      const options = {
+        where: {
+          c_id: id
+        }
+      };
+      const result = await this.app.mysql.update('food',params, options);
+      return result;
+    } catch(e) {
+      return e;
+    }    
   }
 }
 module.exports = FoodService;
