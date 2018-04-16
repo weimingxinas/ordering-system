@@ -10,4 +10,5 @@ module.exports = app => {
   router.resources('login', '/api/login', controller.login);
   router.resources('order', '/api/orderHistory', controller.orderHistory);
   router.resources('food', '/api/food', controller.food);
+  router.get('/api/foodType', controller.food.foodType);
 };

@@ -18,8 +18,15 @@ exports.mysql = {
   // 是否加载到 agent 上，默认关闭
   agent: false,
 };
+exports.cluster = {
+    listen: {
+      port: 18900,
+      hostname: '0.0.0.0',
+      // path: '/var/run/egg.sock',
+    }
+};
 exports.security = {
-  csrf: {
-    enable: false,
-  },
+    csrf: {
+      enable: false,
+    },
 };

@@ -21,7 +21,7 @@ class LoginController extends Controller {
         deadline: deadline
       };
       this.ctx.body = {
-        result: true,
+        data: true,
         status: 200
       };
       this.ctx.cookies.set('mx_token', JSON.stringify(token), {
@@ -29,7 +29,7 @@ class LoginController extends Controller {
       });
     } else {
       this.ctx.body = {
-        result: false,
+        data: false,
         status: 404
       };
     }
