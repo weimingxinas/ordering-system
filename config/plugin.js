@@ -6,15 +6,11 @@ exports.mysql = {
   enable: true,
   package: 'egg-mysql',
 };
-exports.validate = {
-  enable: true,
-  package: 'egg-validate',
-};
-exports.nunjucks = {
-  enable: true,
-  package: 'egg-view-nunjucks',
-};
-// exports.assets = {
+// exports.validate = {
 //   enable: true,
-//   package: 'egg-view-assets',
+//   package: 'egg-validate',
 // };
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};

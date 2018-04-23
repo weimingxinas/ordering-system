@@ -5,8 +5,8 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/', controller.home.index);
   const validCookie = app.middleware.validCookie();
+  router.get('/', controller.home.index);
   /*
   * login
   * author: wmx
@@ -19,14 +19,16 @@ module.exports = app => {
   // 菜
   router.resources('food', '/api/food', controller.food);
   // 菜的分类
-  router.get('/api/foodType', controller.food.foodType);
+  router.get('/api/foodtype', controller.food.foodType);
   /*
   * 订单部分
   * author: wmx
   */  
   // 获取订单列表
-  router.get('/api/order', validCookie, controller.order.index);
+  router.get('/api/order', controller.order.index);
   // 该路由mobile访问，不加验证
   router.post('/api/order', controller.order.create);
-  router.delete('/api/order/:id', controller.order.destroy);
+  router.delete('/api/order/:id', validCookie, controller.order.destroy);
+  // 主html渲染
+  router.post('/api/upload', controller.food.uploadPic);
 };
