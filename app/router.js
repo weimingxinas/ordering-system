@@ -28,7 +28,9 @@ module.exports = app => {
   router.get('/api/order', controller.order.index);
   // 该路由mobile访问，不加验证
   router.post('/api/order', controller.order.create);
+  router.get('/api/order/:id', validCookie, controller.order.show);
   router.delete('/api/order/:id', validCookie, controller.order.destroy);
+  router.put('/api/order/:id', validCookie, controller.order.update);
   // 主html渲染
   router.post('/api/upload', controller.food.uploadPic);
 };

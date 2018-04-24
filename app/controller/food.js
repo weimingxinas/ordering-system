@@ -103,8 +103,7 @@ class FoodController extends Controller {
       throw err;
     }
     this.ctx.body = { 
-      url: this.filename,
-      stream: stream
+      url: this.filename
     };
   }
 }

@@ -9,6 +9,7 @@ class OrderService extends Service {
     return order;
   }
   async insertOrder(order) {
+    let { time, menu, t_id, res_id } = order;
     try {
       return await this.app.mysql.insert('order', order);
     } catch (e) {
@@ -24,6 +25,29 @@ class OrderService extends Service {
     } catch(e) {
       return e;
     }    
+  }
+  async fetchOneOrder(id) {
+    try {
+      const result = await this.app.mysql.select('order',{
+        o_id: id
+      });
+      return result;
+    } catch(e) {
+      return e;
+    }    
+  }
+  async updateOrder(id, params) {
+    try {
+      const options = {
+        where: {
+          o_id: id
+        }
+      };
+      const result = await this.app.mysql.update('order',params, options);
+      return result;
+    } catch(e) {
+      return e;
+    } 
   }
 }
 module.exports = OrderService;

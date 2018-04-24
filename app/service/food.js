@@ -45,5 +45,23 @@ class FoodService extends Service {
       return e;
     }    
   }
+  async addFoodNum(menu) {
+    //批量更新并在total字段
+    try {
+      let result;
+      result = this.app.mysql.query(`
+      update food
+        set total = total + case c_id 
+          when 1 then 1
+          when 2 then 1
+          when 3 then 1
+        end
+      where c_id in(1,2,3)
+      `);
+      return result;
+    }catch(e) {
+      return e;
+    }
+  }
 }
 module.exports = FoodService;
