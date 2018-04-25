@@ -20,7 +20,18 @@ class OrderController extends Controller {
   }
   async create() {
     const msg = this.ctx.request.body;
+    // 计算金额
+    const menuid = Object.keys(msg.menu);
+    let totalPrice = 0;
     if (msg.menu) {
+      const menuPrice = await this.service.food.menuPrice(menuid, ['c_id', 'piece']);
+      menuPrice.map(val => {
+        menuid.map(id => {
+          if (val['c_id'] == id) {
+            totalPrice = ((totalPrice *100) + (val['piece'] * msg.menu[id] * 100)) / 100;
+          }
+        });
+      });
       await this.service.food.addFoodNum(msg.menu);
       msg.menu = await JSON.stringify(msg.menu);
     }
@@ -29,6 +40,7 @@ class OrderController extends Controller {
     const order = {
       ...msg,
       time: new Date(),
+      total_price: totalPrice
     }
     const res = await this.service.order.insertOrder(order);
     if(res.affectedRows === 1) {
@@ -64,6 +76,21 @@ class OrderController extends Controller {
   async show() {
     const id = this.ctx.params.id;
     const res = await this.ctx.service.order.fetchOneOrder(id);
+    const menu = JSON.parse(res.menu);
+    const menuid = Object.keys(menu);
+    let menuList = await this.service.food.menuPrice(menuid, ['c_id', 'c_name', 'piece']);
+    let arr = [];
+    menuList.map(val => {
+      menuid.forEach(id => {
+        if(id == val['c_id']) {
+          arr.push({
+            ...val,
+            'num': menu[id]
+          });
+        }
+      });
+    });
+    res.menu = arr;
     if (res) {
       this.ctx.body ={
         data: res,

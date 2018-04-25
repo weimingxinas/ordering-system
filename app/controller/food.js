@@ -42,7 +42,11 @@ class FoodController extends Controller {
   }
   // 添加菜品
   async create() {
-    const food = this.ctx.request.body;
+    let food = this.ctx.request.body;
+    food = {
+      ...food,
+      total: 0
+    }
     const res = await this.ctx.service.food.insertFood(food);
     if(res.affectedRows === 1) {
       this.ctx.body = await {

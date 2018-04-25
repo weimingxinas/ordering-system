@@ -25,6 +25,15 @@ module.exports = appInfo => {
   config.multipart = {
     //fileExtensions: [ '.doc' ]
   };
+  config.io = {
+    init: { }, // passed to engine.io
+    namespace: {
+      '/': {
+        connectionMiddleware: [],
+        packetMiddleware: [],
+      }
+    }
+  }
   return config;
 };
 

@@ -63,5 +63,17 @@ class FoodService extends Service {
       return e;
     }
   }
+  async menuPrice(menuid, columns) {
+    try {
+      return this.app.mysql.select('food', {
+        where: {
+          c_id: menuid,
+        },
+        columns: columns
+      });
+    }catch(e) {
+      return e;
+    }
+  }
 }
 module.exports = FoodService;

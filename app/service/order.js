@@ -28,7 +28,7 @@ class OrderService extends Service {
   }
   async fetchOneOrder(id) {
     try {
-      const result = await this.app.mysql.select('order',{
+      const result = await this.app.mysql.get('order',{
         o_id: id
       });
       return result;
