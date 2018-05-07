@@ -119,6 +119,24 @@ class OrderController extends Controller {
       }
     }
   }
+  async fetchKpis() {
+    const salesCount = await this.ctx.service.order.salesCount();
+    const PV = 18900;
+    if(salesCount) {
+      this.ctx.body = await {
+        data: {
+          salesCount: salesCount[0]['sum_price'],
+          pv: PV
+        },
+        status: 200
+      }
+    } else {
+      this.ctx.body = await {
+        data: salesCount.sqlMessage || salesCount,
+        status: 'fetch error'
+      }
+    }
+  }
 }
 
 module.exports = OrderController;

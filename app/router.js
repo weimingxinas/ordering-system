@@ -33,4 +33,5 @@ module.exports = app => {
   router.put('/api/order/:id', validCookie, controller.order.update);
   // 主html渲染
   router.post('/api/upload', controller.food.uploadPic);
+  router.get('/api/kpis',controller.order.fetchKpis)
 };

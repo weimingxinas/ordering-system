@@ -49,5 +49,12 @@ class OrderService extends Service {
       return e;
     } 
   }
+  async salesCount() {
+    try {
+      return await this.app.mysql.query("select sum(total_price) as sum_price from `order`");
+    } catch(e) {
+      return e;
+    }
+  }
 }
 module.exports = OrderService;
